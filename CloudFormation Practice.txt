@@ -1,0 +1,22 @@
+
+
+
+Resources:
+	HelloBucket:
+		Type:AWS::S3::Bucket
+		
+
+
+Resources:
+	HelloBucket2:
+		Type:AWS::S3::Bucket
+		Properties:
+			AccessControl:PublicRead
+			WebsiteConfiguration:
+				IndexDocument:index.html
+				ErrorDocument:error.html
+			
+
+
+AWSTemplateFormatVersion:'2010-09-09'
+	Description:AsimpleEC2nstance
