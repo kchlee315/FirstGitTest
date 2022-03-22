@@ -1,0 +1,31 @@
+#cloud-config
+repo_update : true
+repo_upgrade : all
+
+packages:
+- httpd
+- mariadb-server
+- php56
+
+
+runcmd:
+ - yum install httpd
+ - sudo systemctl start httpd
+ - sudo systemctl enable httpd
+ - [ sh, -c, "usermod -a -G apache root"]
+ - [ sh, -c, "chown -R root:apache /var/www"]
+ 
+ - chmod 2775 /var/www
+ - [ find, /var/www, -type, d, -exec, chmod, 2775, {}, + ]
+ - [ find, /var/www, -type, f, -exec, chmod, 0664, {}, + ]
+ - [ sh, -c, 'echo "" > /var/www/html/phpinfo.php' ]
+ - [ sh, -c, 'echo ==== $(date) ====; echo HI WORLD; echo =======' ]
+
+
+#cloud-config
+power_state:
+ delay: "+30"
+ mode: poweroff
+ message: Bye Bye
+ timeout: 30
+ condition: True
